@@ -2,7 +2,7 @@
   "name": "voicestudio-electron",
   "version": "0.0.0-electron",
   "private": true,
-  "description": "VoiceStudio desktop shell (Electron) - local voice cloning, no cloud.",
+  "description": "Twelve Twelve Labs desktop app (Electron) - local voice cloning, no cloud.",
   "homepage": "https://github.com/debpalash/VoiceStudio",
   "license": "AGPL-3.0-only",
   "author": {

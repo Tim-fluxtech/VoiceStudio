@@ -1309,15 +1309,31 @@ _MLX_MODEL_DEFAULT = "mlx-community/whisper-large-v3-mlx"
 _MLX_MODEL_TURBO = "mlx-community/whisper-large-v3-turbo"
 
 
+def _mlx_whisper_model() -> str:
+    """The MLX Whisper repo to transcribe with.
+
+    ``ASR_MODEL`` wins. Otherwise large-v3 (3 GB) is the default, but when only
+    the Turbo model (1.5 GB) is installed use it instead of refusing with
+    ``asr_model_missing`` — on an 8 GB Mac Turbo is the one people install.
+    """
+    pinned = os.environ.get("ASR_MODEL")
+    if pinned:
+        return pinned
+    try:
+        if not _repo_installed(_MLX_MODEL_DEFAULT) and _repo_installed(_MLX_MODEL_TURBO):
+            return _MLX_MODEL_TURBO
+    except Exception:
+        pass  # a broken install check must never block transcription
+    return _MLX_MODEL_DEFAULT
+
+
 class MLXWhisperBackend(ASRBackend):
     id = "mlx-whisper"
     display_name = "MLX Whisper (Apple Silicon CoreML)"
     gpu_compat = ("mps", "cpu")
 
     def __init__(self, model_name: str | None = None):
-        self._model_name = model_name or os.environ.get(
-            "ASR_MODEL", _MLX_MODEL_DEFAULT,
-        )
+        self._model_name = model_name or _mlx_whisper_model()
 
     @classmethod
     def is_available(cls) -> tuple[bool, str]:
@@ -3989,7 +4005,7 @@ def _offline_asr_repo(backend_id: str | None = None) -> str | None:
             or _FASTER_WHISPER_DEFAULT
         )
     if bid == "mlx-whisper":
-        return os.environ.get("ASR_MODEL", _MLX_MODEL_DEFAULT)
+        return _mlx_whisper_model()
     if bid == "parakeet-mlx":
         return os.environ.get("ASR_MODEL_PARAKEET_MLX", _PARAKEET_MLX_DEFAULT)
     if bid == "sherpa-onnx-asr":

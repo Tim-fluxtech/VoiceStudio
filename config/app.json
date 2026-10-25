@@ -1,6 +1,6 @@
 {
-  "productName": "VoiceStudio",
-  "appId": "com.voicestudio.desktop",
+  "productName": "Twelve Twelve Labs",
+  "appId": "com.twelvetwelvelabs.desktop",
   "ports": {
     "backend": 3900,
     "web": 3901,

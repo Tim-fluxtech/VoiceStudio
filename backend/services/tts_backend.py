@@ -2575,6 +2575,25 @@ class MLXAudioBackend(TTSBackend):
     }
     DEFAULT_MODEL_KEY = "kokoro"
 
+    # Kokoro's built-in voices. Without this list `preset_voices_of` reports no
+    # presets for the engine, and POST /generate silently drops `preset_voice`,
+    # so every request came back in the default voice. Only Kokoro reads them;
+    # other models ignore the `voice` kwarg.
+    PRESET_VOICES = [
+        "af_alloy", "af_aoede", "af_bella", "af_heart", "af_jessica", "af_kore", "af_nicole",
+        "af_nova", "af_river", "af_sarah", "af_sky",
+        "am_adam", "am_echo", "am_eric", "am_fenrir", "am_liam", "am_michael", "am_onyx",
+        "am_puck", "am_santa",
+        "bf_alice", "bf_emma", "bf_isabella", "bf_lily",
+        "bm_daniel", "bm_fable", "bm_george", "bm_lewis",
+        "ef_dora", "em_alex", "em_santa", "ff_siwis",
+        "hf_alpha", "hf_beta", "hm_omega", "hm_psi", "if_sara", "im_nicola",
+        "jf_alpha", "jf_gongitsune", "jf_nezumi", "jf_tebukuro", "jm_kumo",
+        "pf_dora", "pm_alex", "pm_santa",
+        "zf_xiaobei", "zf_xiaoni", "zf_xiaoxiao", "zf_xiaoyi",
+        "zm_yunjian", "zm_yunxi", "zm_yunxia", "zm_yunyang",
+    ]
+
     # Languages each curated model is documented to speak, as ISO 639-1 codes.
     # Drives both the language picker and the synthesis guard, so neither can
     # offer a language the model cannot say. Custom repos stay open-ended.
@@ -4110,7 +4129,21 @@ def active_backend_id() -> str:
     # Env var > persisted UI choice > default. Env wins so power-users can
     # pin a backend without the Settings picker silently undoing it.
     from core import prefs
-    return prefs.resolve("tts_backend", env="OMNIVOICE_TTS_BACKEND", default="omnivoice")
+    return prefs.resolve("tts_backend", env="OMNIVOICE_TTS_BACKEND", default=_default_backend_id())
+
+
+def _default_backend_id() -> str:
+    """Twelve Twelve Labs default engine.
+
+    OmniVoice's weights are non-commercial (CC-BY-NC), so it is not the default
+    on Apple Silicon, where the Apache-licensed MLX engines (Kokoro, CSM) run.
+    Other platforms keep OmniVoice until they have an equivalent.
+    """
+    import platform
+    import sys
+    if sys.platform == "darwin" and platform.machine() == "arm64":
+        return "mlx-audio"
+    return "omnivoice"
 
 
 # Cached active backend instance + its id (MM2-01). Without this, every call
