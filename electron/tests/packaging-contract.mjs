@@ -10,6 +10,9 @@ import { verifyLinuxLibraries } from '../native-linux-libraries.mjs';
 import { APP_ID, PRODUCT_NAME } from '../../config/app-config.mjs';
 import { DISTRIBUTION_PROFILE, DISTRIBUTION_TARGET } from '../../config/distributions.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+// electron-builder.config.mjs turns the product name into a file-name-safe prefix
+// ("Twelve Twelve Labs" -> "Twelve-Twelve-Labs"); the expectation below must do the same.
+const ARTIFACT_PREFIX = PRODUCT_NAME.replace(/[^A-Za-z0-9]+/g, '-');
 if (process.platform === 'linux') {
   const librariesTest = spawnSync(
     process.execPath,
@@ -76,7 +79,7 @@ assert.equal(config.productName, PRODUCT_NAME, 'Builder uses the central product
 assert.equal(config.appId, APP_ID, 'Builder uses the central application ID');
 assert.equal(
   config.artifactName,
-  `${PRODUCT_NAME}-${
+  `${ARTIFACT_PREFIX}-${
     {
       'microsoft-store': 'MicrosoftStore',
       'mac-app-store': 'MacAppStore',
