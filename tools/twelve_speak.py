@@ -90,6 +90,16 @@ def _post(url: str, fields: dict[str, str], files: dict[str, Path], timeout: int
         raise RuntimeError(f"HTTP {e.code} from {url}: {detail}") from None
 
 
+def _post_json(url: str, payload: dict, timeout: int) -> bytes:
+    req = urllib.request.Request(url, data=json.dumps(payload).encode(),
+                                 headers={"Content-Type": "application/json"})
+    try:
+        return urllib.request.urlopen(req, timeout=timeout).read()
+    except urllib.error.URLError as e:
+        raise RuntimeError(f"could not reach {url} ({e}). Is the backend running? "
+                           "cd ~/TwelveTwelveLabs && bun run dev:api") from None
+
+
 def generate(base: str, text: str, ref: Path, ref_text: str, timeout: int = 280) -> bytes:
     return _post(f"{base}/generate",
                  {"text": text, "engine": "mlx-audio", "ref_text": ref_text, "language": "English"},
@@ -134,6 +144,10 @@ def main() -> int:
         print("nothing to read", file=sys.stderr)
         return 2
     print(f"{len(sentences)} sentence(s); verify={'off' if args.no_verify else 'on'}")
+
+    # Cloning needs the CSM model active; the backend keeps whichever model was used last.
+    _post_json(f"{args.url}/engines/select",
+               {"family": "tts", "backend_id": "mlx-audio", "model_id": "csm"}, 120)
 
     work = Path(tempfile.mkdtemp(prefix="twelve_"))
     kept: list[Path] = []

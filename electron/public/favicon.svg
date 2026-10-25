@@ -1,21 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="VoiceStudio">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Twelve Twelve Labs">
   <defs>
-    <linearGradient id="tile" x1="7" y1="4" x2="58" y2="62" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#211B2B"/>
-      <stop offset="1" stop-color="#120F18"/>
-    </linearGradient>
-    <radialGradient id="warmth" cx="0" cy="0" r="1" gradientTransform="translate(49 13) rotate(132) scale(42)" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#6A2D4C" stop-opacity="0.44"/>
-      <stop offset="1" stop-color="#6A2D4C" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="voice" x1="7" y1="18" x2="59" y2="46" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFD0DB"/>
-      <stop offset="0.5" stop-color="#F47FA3"/>
-      <stop offset="1" stop-color="#F7AE73"/>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1c144e"/>
+      <stop offset="1" stop-color="#0c0926"/>
     </linearGradient>
   </defs>
-  <rect x="2" y="2" width="60" height="60" rx="15" fill="url(#tile)"/>
-  <rect x="2.5" y="2.5" width="59" height="59" rx="14.5" fill="url(#warmth)" stroke="#FFFFFF" stroke-opacity="0.09"/>
-  <path d="M6 34c4 0 5-7 9-7 5 0 4 14 9 14 5 0 4-23 9-23s4 28 9 28 4-21 9-21c4 0 5 9 8 9" fill="none" stroke="url(#voice)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M50 9c.7 4.3 3.7 7.3 8 8-4.3.7-7.3 3.7-8 8-.7-4.3-3.7-7.3-8-8 4.3-.7 7.3-3.7 8-8Z" fill="#FFE5B5"/>
+  <rect x="2.2" y="2.2" width="59.6" height="59.6" rx="14.4" fill="url(#tile)"/>
+  <line x1="32.00" y1="23.36" x2="32.00" y2="10.56" stroke="#5ef2d0" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="36.32" y1="24.52" x2="40.29" y2="17.64" stroke="#65e7d4" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="39.48" y1="27.68" x2="48.35" y2="22.56" stroke="#6ddcd8" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="40.64" y1="32.00" x2="47.04" y2="32.00" stroke="#75d1dc" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="39.48" y1="36.32" x2="47.46" y2="40.93" stroke="#7dc6e1" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="36.32" y1="39.48" x2="39.01" y2="44.14" stroke="#85bbe5" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="32.00" y1="40.64" x2="32.00" y2="48.83" stroke="#8db1e9" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="27.68" y1="39.48" x2="24.74" y2="44.58" stroke="#95a6ed" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="24.52" y1="36.32" x2="15.87" y2="41.31" stroke="#9d9bf2" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="23.36" y1="32.00" x2="16.32" y2="32.00" stroke="#a590f6" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="24.52" y1="27.68" x2="14.76" y2="22.05" stroke="#ad85fa" stroke-width="3.97" stroke-linecap="round"/>
+  <line x1="27.68" y1="24.52" x2="23.46" y2="17.20" stroke="#b57bff" stroke-width="3.97" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="2.9" fill="#ece8ff"/>
 </svg>
